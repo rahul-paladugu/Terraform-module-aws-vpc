@@ -26,3 +26,9 @@ resource "aws_route_table" "main" {
   }
   tags = merge({Name = local.public_route_table_name}, var.common_tags)
 }
+
+resource "aws_route_table_association" "main" {
+  count = length(aws_subnet.main)
+  subnet_id      = aws_subnet.main[count.index].id
+  route_table_id = aws_route_table.main.id
+}
