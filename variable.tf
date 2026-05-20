@@ -18,7 +18,7 @@ variable "common_tags" {
     }
 }
 
-variable "cidr_subnet_blocks" {
+variable "subnet_cidr_blocks" {
   type = list
 }
 
@@ -29,3 +29,8 @@ variable "availability_zones" {
 variable "public_subnents" {
   type = list
 }
+
+variable "public_route_cidr_blocks" {
+  type = string
+}
+
