@@ -17,3 +17,15 @@ variable "common_tags" {
         Terraform = "True"
     }
 }
+
+variable "cidr_subnet_blocks" {
+  type = list
+}
+
+variable "availability_zones" {
+  type = list
+}
+
+variable "public_subnents" {
+  type = list
+}
