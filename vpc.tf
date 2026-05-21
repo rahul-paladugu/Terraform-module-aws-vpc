@@ -80,8 +80,20 @@ resource "aws_route_table_association" "private" {
   route_table_id = aws_route_table.private.id
 }
 
+resource "aws_route" "private" {
+  route_table_id            = aws_route_table.private.id
+  destination_cidr_block    = var.internet_cidr
+  gateway_id = aws_nat_gateway.main
+}
+
 resource "aws_route_table_association" "database" {
   count = length(aws_subnet.database)
   subnet_id      = aws_subnet.database[count.index].id
   route_table_id = aws_route_table.database.id
+}
+
+resource "aws_route" "database" {
+  route_table_id            = aws_route_table.database.id
+  destination_cidr_block    = var.internet_cidr
+  vpc_peering_connection_id = aws_nat_gateway.main
 }
