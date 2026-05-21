@@ -95,5 +95,5 @@ resource "aws_route_table_association" "database" {
 resource "aws_route" "database" {
   route_table_id            = aws_route_table.database.id
   destination_cidr_block    = var.internet_cidr
-  vpc_peering_connection_id = aws_nat_gateway.main.id
+  gateway_id = aws_nat_gateway.main.id
 }
