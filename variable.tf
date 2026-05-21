@@ -34,10 +34,6 @@ variable "az_names" {
   type = list
 }
 
-variable "public_subnents" {
-  type = list
-}
-
 variable "internet_cidr" {
   type = string
 }

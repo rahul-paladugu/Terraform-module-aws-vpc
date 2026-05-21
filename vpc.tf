@@ -41,13 +41,47 @@ resource "aws_route_table" "public" {
     cidr_block = var.internet_cidr
     gateway_id = aws_internet_gateway.main.id
   }
-  tags = merge({Name = local.public_route_table_name}, var.common_tags)
+  tags = merge({Name = "${local.common_name}-public"}, var.common_tags)
+}
+
+resource "aws_route_table" "private" {
+  vpc_id = aws_vpc.main.id
+  tags = merge({Name = "${local.common_name}-private"}, var.common_tags)
+}
+
+resource "aws_route_table" "database" {
+  vpc_id = aws_vpc.main.id
+  tags = merge({Name = "${local.common_name}-database"}, var.common_tags)
 }
 
 
-
-resource "aws_route_table_association" "main" {
+resource "aws_route_table_association" "public" {
   count = length(aws_subnet.public)
   subnet_id      = aws_subnet.public[count.index].id
   route_table_id = aws_route_table.public.id
+}
+
+resource "aws_eip" "nat" {
+  domain       = "vpc"
+  tags = merge({Name = "${var.project}-eip"}, var.common_tags)
+}
+
+resource "aws_nat_gateway" "main" {
+  allocation_id = aws_eip.example.id
+  subnet_id     = aws_subnet.example.id
+
+  tags = merge({Name = "Nat-gw-${var.project}"}, var.common_tags)
+  depends_on = [aws_internet_gateway.main]
+}
+
+resource "aws_route_table_association" "private" {
+  count = length(aws_subnet.private)
+  subnet_id      = aws_subnet.private[count.index].id
+  route_table_id = aws_route_table.private.id
+}
+
+resource "aws_route_table_association" "database" {
+  count = length(aws_subnet.database)
+  subnet_id      = aws_subnet.database[count.index].id
+  route_table_id = aws_route_table.database.id
 }
