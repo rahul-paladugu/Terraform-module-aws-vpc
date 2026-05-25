@@ -35,5 +35,5 @@ output "eip_id" {
 }
 
 output "nat_gateway_id" {
-  value = aws.aws_nat_gateway.main.id
+  value = aws_nat_gateway.main.id
 }
