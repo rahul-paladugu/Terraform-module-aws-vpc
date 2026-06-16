@@ -144,7 +144,7 @@ output "database_subnets" {
 
 output "nat_gateway_id" {
   description = "DEPRECATED: use nat_gateway_id. Kept for backwards compatibility."
-  value       = aws_nat_gateway.main
+  value       = aws_nat_gateway.main.id
 }
 
 output "eip_id" {
