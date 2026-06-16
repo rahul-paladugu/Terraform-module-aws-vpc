@@ -15,11 +15,6 @@ output "vpc_cidr_block" {
   value       = aws_vpc.main.cidr_block
 }
 
-output "default_security_group_id" {
-  description = "ID of the VPC's default security group. Avoid using this; create explicit SGs instead."
-  value       = aws_vpc.main.default_security_group_id
-}
-
 # ─────────────────────────────────────────────────────────────────────────────
 # INTERNET GATEWAY
 # ─────────────────────────────────────────────────────────────────────────────
@@ -97,18 +92,14 @@ output "database_subnets_by_az" {
 
 output "nat_gateway_ids" {
   description = "List of NAT Gateway IDs. Empty if enable_nat_gateway = false."
-  value       = aws_nat_gateway.main[*].id
+  value       = aws_nat_gateway.main.id
 }
 
-output "nat_gateway_public_ips" {
+output "nat_gateway_public_ip" {
   description = "List of public Elastic IPs assigned to the NAT Gateways."
-  value       = aws_eip.nat[*].public_ip
+  value       = aws_eip.nat_eip.public_ip
 }
 
-output "eip_ids" {
-  description = "List of Elastic IP allocation IDs used by NAT Gateways."
-  value       = aws_eip.nat[*].id
-}
 
 # ─────────────────────────────────────────────────────────────────────────────
 # ROUTE TABLES
@@ -116,7 +107,7 @@ output "eip_ids" {
 
 output "public_route_table_id" {
   description = "ID of the public route table."
-  value       = aws_route_table.public.id
+  value       = aws_route_table.public[*].id
 }
 
 output "private_route_table_ids" {
