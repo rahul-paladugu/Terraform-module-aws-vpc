@@ -158,5 +158,5 @@ output "nat_gateway_id" {
 
 output "eip_id" {
   description = "DEPRECATED: use eip_id. Kept for backwards compatibility."
-  value       = aws_eip.nat
+  value       = aws_eip.nat_eip.public_ip
 }
