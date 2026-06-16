@@ -129,19 +129,7 @@ output "database_route_table_ids" {
   value       = aws_route_table.database[*].id
 }
 
-# ─────────────────────────────────────────────────────────────────────────────
-# FLOW LOGS
-# ─────────────────────────────────────────────────────────────────────────────
 
-output "flow_log_id" {
-  description = "ID of the VPC Flow Log resource. Empty string if flow logs are disabled."
-  value       = aws_flow_log.main.id
-}
-
-output "flow_log_cloudwatch_log_group_arn" {
-  description = "ARN of the CloudWatch Log Group for flow logs. Empty if not using CloudWatch."
-  value       = aws_cloudwatch_log_group.flow_logs.arn 
-}
 
 # ─────────────────────────────────────────────────────────────────────────────
 # LEGACY ALIASES — kept for backwards compatibility with existing callers
